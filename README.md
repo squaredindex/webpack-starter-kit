@@ -1,2 +1,2 @@
-# webpack-starter-kit
+# webpack-react-starter-kit
 This is just for personal use on small current static projects.
