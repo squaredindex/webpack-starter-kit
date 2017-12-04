@@ -1,11 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: './src/app.js',
+    entry: {
+        app: './src/app.js',
+        contact: './src/contact.js'
+    },
     output: {
         path:__dirname + '/dist',
-        filename: 'app.bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -35,13 +39,29 @@ module.exports = {
       },
     plugins: [
         new HtmlWebpackPlugin({
-            title: '<%= htmlWebpackPlugin.options.title %>',
+            title: 'Webpack Starter Kit',
             minify: {
                 collapseWhitespace: true
             },
             hash: true,
-            template: './src/project.html'
+            excludeChunks: ['contact'],
+            template: './src/index.html'
         }),
-        new ExtractTextPlugin("app.css")
+        new HtmlWebpackPlugin({
+            title: 'Contact Page',
+            minify: {
+                collapseWhitespace: true
+            },
+            hash: true,
+            chunks: ['contact'],
+            filename: 'contact.html',
+            template: './src/contact.html'
+        }),
+        // new FaviconsWebpackPlugin('favicon.png'),
+        new ExtractTextPlugin({
+            filename: 'app.css',
+            disable: false,
+            allChunks: true
+        })
     ]
 };
